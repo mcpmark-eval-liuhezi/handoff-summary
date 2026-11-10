@@ -1,0 +1,19 @@
+name: handoff-summary
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write handoff summary log
+        run: |
+          printf '%s\n' "GitHub Actions handoff summary ($(date -u +%Y-%m-%dT%H:%M:%SZ))" > handoff-summary.log
+          printf '%s\n' "Account: HeziLiu" "Repository: mcpmark-eval-liuhezi/handoff-summary" "Trigger: workflow_dispatch (manual)" >> handoff-summary.log
+          cat handoff-summary.log
+      - name: Upload handoff summary log as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: handoff-summary
+          path: handoff-summary.log
